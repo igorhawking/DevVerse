@@ -53,10 +53,7 @@ export default function SettingsPage() {
               Notifications
             </TabsTrigger>
           </TabsList>
-        </Tabs>
-
-        <div className="flex-1">
-          <TabsContent value="profile" className="m-0">
+          <TabsContent value="profile">
             <Card>
               <CardHeader>
                 <CardTitle>Profile Settings</CardTitle>
@@ -91,8 +88,7 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-
-          <TabsContent value="appearance" className="m-0">
+          <TabsContent value="appearance">
             <Card>
               <CardHeader>
                 <CardTitle>Appearance</CardTitle>
@@ -158,8 +154,7 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-
-          <TabsContent value="security" className="m-0">
+          <TabsContent value="security">
             <Card>
               <CardHeader>
                 <CardTitle>Security</CardTitle>
@@ -199,8 +194,7 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-
-          <TabsContent value="api" className="m-0">
+          <TabsContent value="api">
             <Card>
               <CardHeader>
                 <CardTitle>API Keys</CardTitle>
@@ -264,8 +258,7 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-
-          <TabsContent value="notifications" className="m-0">
+          <TabsContent value="notifications">
             <Card>
               <CardHeader>
                 <CardTitle>Notification Settings</CardTitle>
@@ -316,6 +309,10 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
+        </Tabs>
+
+        <div className="flex-1">
+          {/* Rest of the component content remains unchanged */}
         </div>
       </div>
     </div>

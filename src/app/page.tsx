@@ -56,14 +56,11 @@ export default function LandingPage() {
           <div className="grid gap-8 md:grid-cols-2 md:gap-12">
             <div className="flex flex-col justify-center space-y-6">
               <h1 className="text-4xl font-extrabold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
-                Your Complete{" "}
-                <span className="text-[#9F5BFF]">Developer Workspace</span> in
-                the Cloud
+                Seu Espaço de Desenvolvimento Completo{" "}
+                <span className="text-[#9F5BFF]">no Cloud</span>
               </h1>
               <p className="max-w-[600px] text-xl text-white/70">
-                A comprehensive, modular development environment with integrated
-                tools and customizable workspaces designed to enhance developer
-                productivity.
+                Um ambiente de desenvolvimento modular com ferramentas integradas e espaços de trabalho personalizáveis para aumentar a produtividade do desenvolvedor.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Link href="/dashboard">
@@ -124,10 +121,10 @@ helloDevVerse();`}
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Powerful Features
+              Recursos Potentes
             </h2>
             <p className="mx-auto max-w-2xl text-white/70">
-              Everything you need to code, collaborate, and ship faster
+              Tudo o que você precisa para codificar, colaborar e entregar mais rápido
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -135,20 +132,18 @@ helloDevVerse();`}
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#9F5BFF]/20">
                 <Code className="h-6 w-6 text-[#9F5BFF]" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Modular Workspace</h3>
+              <h3 className="mb-2 text-xl font-semibold">Espaço de Trabalho Modular</h3>
               <p className="text-white/70">
-                Customize your development environment with drag-and-drop
-                modules and save your layouts.
+                Personalize seu ambiente de desenvolvimento com módulos arrastar-e-soltar e salve seus layouts.
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:border-[#9F5BFF]/50 hover:bg-white/10">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#9F5BFF]/20">
                 <Zap className="h-6 w-6 text-[#9F5BFF]" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Integrated Tools</h3>
+              <h3 className="mb-2 text-xl font-semibold">Ferramentas Integradas</h3>
               <p className="text-white/70">
-                Access terminal, code editor, preview, and more in one unified
-                interface.
+                Acesse terminal, editor de código, visualização e mais em uma única interface.
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:border-[#9F5BFF]/50 hover:bg-white/10">
@@ -156,21 +151,19 @@ helloDevVerse();`}
                 <Shield className="h-6 w-6 text-[#9F5BFF]" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">
-                Secure Collaboration
+                Colaboração Segura
               </h3>
               <p className="text-white/70">
-                Work together with your team in real-time with built-in version
-                control and permissions.
+                Trabalhe junto com seu time em tempo real com controle de versão integrado e permissões.
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:border-[#9F5BFF]/50 hover:bg-white/10">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#9F5BFF]/20">
                 <Sparkles className="h-6 w-6 text-[#9F5BFF]" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">AI Assistance</h3>
+              <h3 className="mb-2 text-xl font-semibold">Assistência AI</h3>
               <p className="text-white/70">
-                Get intelligent code suggestions and automate repetitive tasks
-                with built-in AI.
+                Obtenha sugestões de código inteligente e automatize tarefas repetitivas com AI integrado.
               </p>
             </div>
           </div>
@@ -185,10 +178,10 @@ helloDevVerse();`}
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-              Loved by Developers
+              Agradecidos por Desenvolvedores
             </h2>
             <p className="mx-auto max-w-2xl text-white/70">
-              See what our users have to say about DevVerse
+              Veja o que nossos usuários têm a dizer sobre o DevVerse
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
@@ -208,8 +201,7 @@ helloDevVerse();`}
                 </div>
               </div>
               <p className="text-white/80">
-                "DevVerse has completely transformed my workflow. The modular
-                workspace is a game-changer for productivity."
+                "DevVerse mudou completamente minha forma de trabalhar. O espaço de trabalho modular é um game-changer para produtividade."
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
@@ -228,8 +220,7 @@ helloDevVerse();`}
                 </div>
               </div>
               <p className="text-white/80">
-                "The integrated terminal and preview features save me so much
-                time. I can't imagine going back to my old setup."
+                "As funcionalidades de terminal e visualização integradas economizam muito tempo. Eu não consigo imaginar voltar para minha configuração antiga."
               </p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
@@ -248,8 +239,7 @@ helloDevVerse();`}
                 </div>
               </div>
               <p className="text-white/80">
-                "DevVerse's snippet management and task tracking have made our
-                team collaboration seamless and efficient."
+                "O gerenciamento de trechos e o rastreamento de tarefas do DevVerse tornaram a colaboração do nosso time suave e eficiente."
               </p>
             </div>
           </div>
@@ -261,11 +251,11 @@ helloDevVerse();`}
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-bold md:text-4xl">
-              Ready to Transform Your Development Experience?
+              Pronto para Transformar Sua Experiência de Desenvolvimento?
             </h2>
             <p className="mb-8 text-xl text-white/70">
-              Join thousands of developers who have already upgraded their
-              workflow with DevVerse.
+              Junte-se a milhares de desenvolvedores que já atualizaram seu
+              fluxo de trabalho com o DevVerse.
             </p>
             <Link href="/auth/register">
               <Button

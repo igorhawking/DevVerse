@@ -235,43 +235,43 @@ export default function DocsPage() {
               <CardHeader className="border-b">
                 <div className="flex items-center justify-between">
                   <CardTitle>{activeDoc.title}</CardTitle>
-                  <Tabs
-                    defaultValue="preview"
-                    value={activeTab}
-                    onValueChange={setActiveTab}
-                  >
-                    <TabsList>
-                      <TabsTrigger value="preview">Preview</TabsTrigger>
-                      <TabsTrigger value="edit">Edit</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
                 </div>
               </CardHeader>
               <CardContent className="p-6">
-                <TabsContent value="preview" className="m-0 outline-none">
-                  <div className="prose prose-invert max-w-none">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: formatMarkdown(activeDoc.content),
+                <Tabs
+                  defaultValue="preview"
+                  value={activeTab}
+                  onValueChange={setActiveTab}
+                >
+                  <TabsList>
+                    <TabsTrigger value="preview">Preview</TabsTrigger>
+                    <TabsTrigger value="edit">Edit</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="preview" className="m-0 outline-none">
+                    <div className="prose prose-invert max-w-none">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: formatMarkdown(activeDoc.content),
+                        }}
+                      />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="edit" className="m-0 outline-none">
+                    <textarea
+                      className="h-[calc(100vh-20rem)] w-full rounded-md border border-input bg-transparent p-3 font-mono text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      value={activeDoc.content}
+                      onChange={(e) => {
+                        const updatedDocs = docs.map((doc) =>
+                          doc.id === activeDoc.id
+                            ? { ...doc, content: e.target.value }
+                            : doc,
+                        );
+                        setDocs(updatedDocs);
+                        setActiveDoc({ ...activeDoc, content: e.target.value });
                       }}
                     />
-                  </div>
-                </TabsContent>
-                <TabsContent value="edit" className="m-0 outline-none">
-                  <textarea
-                    className="h-[calc(100vh-20rem)] w-full rounded-md border border-input bg-transparent p-3 font-mono text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    value={activeDoc.content}
-                    onChange={(e) => {
-                      const updatedDocs = docs.map((doc) =>
-                        doc.id === activeDoc.id
-                          ? { ...doc, content: e.target.value }
-                          : doc,
-                      );
-                      setDocs(updatedDocs);
-                      setActiveDoc({ ...activeDoc, content: e.target.value });
-                    }}
-                  />
-                </TabsContent>
+                  </TabsContent>
+                </Tabs>
               </CardContent>
             </Card>
           )}

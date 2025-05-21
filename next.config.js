@@ -2,7 +2,15 @@
 
 const nextConfig = {
     images: {
-        domains: ['images.unsplash.com'],
+        domains: ['images.unsplash.com', 'api.dicebear.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'api.dicebear.com',
+                pathname: '/7.x/avataaars/svg*',
+            },
+        ],
+        dangerouslyAllowSVG: true,
     }
 };
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MODULE_CARDS } from "@/lib/constants";
 import ModuleCard from "@/components/dashboard/ModuleCard";
 import {
@@ -6,6 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import {
   ArrowUpRight,
@@ -18,7 +20,9 @@ import {
   Terminal,
   FileText,
   Plug,
+  ArrowRight,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   // Map icon names to components

@@ -1,11 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import AIModal from "@/components/ai/AIModal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code, Plus, Search, Star, StarOff, Tag } from "lucide-react";
 import { useState } from "react";
+import { useAppStore } from "@/lib/store";
 
 const LANGUAGES = [
   "All",
@@ -124,6 +126,7 @@ export default function SnippetsPage() {
 
   return (
     <div className="container mx-auto p-6">
+      <AIModal />
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Snippets</h1>
@@ -131,10 +134,15 @@ export default function SnippetsPage() {
             Manage and organize your code snippets
           </p>
         </div>
-        <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
-          <Plus className="mr-2 h-4 w-4" />
-          New Snippet
-        </Button>
+        <div className="flex gap-2">
+          <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+            <Plus className="mr-2 h-4 w-4" />
+            New Snippet
+          </Button>
+          <Button variant="outline" onClick={() => useAppStore.getState().setAIModalOpen(true)}>
+            Gerar com IA
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[300px_1fr]">

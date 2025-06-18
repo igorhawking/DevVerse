@@ -15,6 +15,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,15 +30,25 @@ export default function LoginPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const [error, setError] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
 
-    // Simulate login
-    setTimeout(() => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (error) {
+      setError(error.message);
       setIsLoading(false);
-      router.push("/dashboard");
-    }, 1500);
+      return;
+    }
+    setIsLoading(false);
+    router.push("/dashboard");
   };
 
   return (
@@ -100,6 +111,9 @@ export default function LoginPage() {
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>
+            {error && (
+              <div className="text-red-500 text-sm text-center mt-2">{error}</div>
+            )}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/10"></div>

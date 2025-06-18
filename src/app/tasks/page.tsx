@@ -1,11 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useAppStore } from "@/lib/store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Clock, Filter, Plus, Search, Tag } from "lucide-react";
 import { useState } from "react";
+import AIModal from "@/components/ai/AIModal";
 
 const TASKS = [
   {
@@ -99,15 +101,21 @@ export default function TasksPage() {
 
   return (
     <div className="container mx-auto p-6">
+      <AIModal />
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Tasks</h1>
           <p className="text-muted-foreground">Manage your project tasks</p>
         </div>
-        <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
-          <Plus className="mr-2 h-4 w-4" />
-          New Task
-        </Button>
+        <div className="flex gap-2">
+          <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+            <Plus className="mr-2 h-4 w-4" />
+            New Task
+          </Button>
+          <Button variant="outline" onClick={() => useAppStore.getState().setAIModalOpen(true)}>
+            Gerar com IA
+          </Button>
+        </div>
       </div>
 
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

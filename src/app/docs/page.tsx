@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download, FileText, FolderTree, Plus, Search } from "lucide-react";
 import { useState } from "react";
+import AIModal from "@/components/ai/AIModal";
+import { useAppStore } from "@/lib/store";
 
 const DOCS = [
   {
@@ -165,10 +167,14 @@ export default function DocsPage() {
             Create and manage project documentation
           </p>
         </div>
+        <AIModal />
         <div className="flex gap-2">
           <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
             <Plus className="mr-2 h-4 w-4" />
             New Document
+          </Button>
+          <Button variant="outline" onClick={() => useAppStore.getState().setAIModalOpen(true)}>
+            Gerar com IA
           </Button>
           <Button variant="outline">
             <FolderTree className="mr-2 h-4 w-4" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import ApiKeySettings from "@/components/settings/ApiKeySettings";
 import {
   Card,
   CardContent,

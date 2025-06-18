@@ -1,6 +1,9 @@
+"use client";
 import Link from "next/link";
 import { MODULE_CARDS } from "@/lib/constants";
 import ModuleCard from "@/components/dashboard/ModuleCard";
+import AIModal from "@/components/ai/AIModal";
+import { useAppStore } from "@/lib/store";
 import {
   Card,
   CardContent,
@@ -38,17 +41,25 @@ export default function DashboardPage() {
     return icons[iconName] || <Code2 size={24} />;
   };
 
+  const { setAIModalOpen } = useAppStore();
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome to your DevVerse workspace
-        </p>
-      </div>
+    <>
+      <AIModal />
+      <div className="container mx-auto px-2 py-4 sm:px-4 md:px-6 lg:px-8 max-w-full">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome to your DevVerse workspace
+            </p>
+          </div>
+          <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0] w-full sm:w-auto text-white font-semibold shadow-md transition-colors" onClick={() => setAIModalOpen(true)}>
+            Assistente IA
+          </Button>
+        </div>
 
       {/* Stats Overview */}
-      <div className="mb-8 grid gap-4 md:grid-cols-4">
+      <div className="mb-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">
@@ -99,10 +110,11 @@ export default function DashboardPage() {
 
       {/* Recent Activity */}
       <div className="mb-8">
+  <h2 className="mb-4 text-lg sm:text-xl font-semibold">Recent Activity</h2>
         <h2 className="mb-4 text-xl font-semibold">Recent Activity</h2>
         <Card>
           <CardContent className="p-0">
-            <div className="divide-y">
+            <div className="divide-y divide-muted-foreground/20">
               {[
                 {
                   action: "Updated project",
@@ -125,7 +137,7 @@ export default function DashboardPage() {
                   time: "2 days ago",
                 },
               ].map((activity, i) => (
-                <div key={i} className="flex items-center justify-between p-4">
+                <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-2">
                   <div>
                     <p className="font-medium">{activity.action}</p>
                     <p className="text-sm text-muted-foreground">
@@ -144,20 +156,20 @@ export default function DashboardPage() {
 
       {/* Modules */}
       <div>
-        <h2 className="mb-4 text-xl font-semibold">Modules</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mb-4 text-lg sm:text-xl font-semibold">Modules</h2>
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {MODULE_CARDS.map((module) => (
             <Card
               key={module.path}
               className="overflow-hidden transition-all hover:shadow-md"
             >
-              <CardHeader className="p-4 pb-0">
+              <CardHeader className="p-4 pb-0 bg-gradient-to-b from-[#9F5BFF]/10 to-transparent">
                 <div
                   className={`mb-2 flex h-10 w-10 items-center justify-center rounded-md ${module.color}`}
                 >
                   <div className="text-white">{getIcon(module.icon)}</div>
                 </div>
-                <CardTitle className="text-xl">{module.title}</CardTitle>
+                <CardTitle className="text-base sm:text-xl">{module.title}</CardTitle>
                 <CardDescription>{module.description}</CardDescription>
               </CardHeader>
               <CardContent className="p-4 pt-0">
@@ -165,7 +177,7 @@ export default function DashboardPage() {
               </CardContent>
               <CardFooter className="p-4 pt-0">
                 <Link href={module.path} className="w-full">
-                  <Button variant="outline" className="w-full justify-between">
+                  <Button variant="outline" className="w-full justify-between border-[#9F5BFF] hover:bg-[#f6f0ff] transition-colors">
                     <span>Open {module.title}</span>
                     <ArrowRight size={16} />
                   </Button>
@@ -176,5 +188,6 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+  </>
   );
 }

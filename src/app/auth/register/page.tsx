@@ -15,6 +15,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -64,18 +65,31 @@ export default function RegisterPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const [error, setError] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setError("");
 
-    // Simulate registration
-    setTimeout(() => {
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: { name: formData.name },
+      },
+    });
+
+    if (error) {
+      setError(error.message);
       setIsLoading(false);
-      router.push("/dashboard");
-    }, 1500);
+      return;
+    }
+    setIsLoading(false);
+    router.push("/dashboard");
   };
 
   return (
@@ -165,6 +179,9 @@ export default function RegisterPage() {
             >
               {isLoading ? "Creating account..." : "Create account"}
             </Button>
+            {error && (
+              <div className="text-red-500 text-sm text-center mt-2">{error}</div>
+            )}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/10"></div>

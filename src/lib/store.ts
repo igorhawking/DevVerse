@@ -13,6 +13,14 @@ interface AppState {
   currentWorkspaceLayout: string;
   workspaceLayouts: Array<{ id: string; name: string; config: any }>;
 
+  // IA State
+  apiKey: string | null;
+  setApiKey: (key: string) => void;
+  history: any[];
+  addHistory: (item: any) => void;
+  aiModalOpen: boolean;
+  setAIModalOpen: (open: boolean) => void;
+
   // Actions
   toggleSidebar: () => void;
   toggleCommandPalette: () => void;
@@ -39,6 +47,14 @@ export const useAppStore = create<AppState>((set) => ({
     { id: "default", name: "Default Layout", config: {} },
     { id: "coding", name: "Coding Focus", config: {} },
   ],
+
+  // Estado IA
+  apiKey: null,
+  setApiKey: (key: string) => set(() => ({ apiKey: key })),
+  history: [],
+  addHistory: (item: any) => set((state) => ({ history: [...state.history, item] })),
+  aiModalOpen: false,
+  setAIModalOpen: (open: boolean) => set(() => ({ aiModalOpen: open })),
 
   // Actions
   toggleSidebar: () =>

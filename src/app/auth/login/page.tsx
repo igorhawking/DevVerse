@@ -59,9 +59,7 @@ export default function LoginPage() {
       <Card className="mx-auto w-full max-w-md border-white/10 bg-black/60 backdrop-blur-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center">
-            <div className="mb-4 h-10 w-10 rounded-full bg-[#9F5BFF] flex items-center justify-center">
-              <span className="text-white text-sm font-bold">D</span>
-            </div>
+            <img src="/logo.png" alt="DevVerse Logo" width={128} height={128} className="mb-4 rounded-full shadow-lg animate-bounce" />
           </div>
           <CardTitle className="text-center text-2xl">Welcome back</CardTitle>
           <CardDescription className="text-center">

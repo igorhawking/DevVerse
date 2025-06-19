@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("profile");
@@ -22,7 +23,8 @@ export default function SettingsPage() {
 
   return (
     <div className="container mx-auto p-6">
-      <div className="mb-8">
+      <div className="mb-8 flex flex-col items-center">
+        <img src="/logo.png" alt="DevVerse Logo" width={96} height={96} className="mb-4 rounded-full shadow" />
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-muted-foreground">
           Manage your account and preferences
@@ -174,7 +176,7 @@ export default function SettingsPage() {
                   <Label htmlFor="confirm-password">Confirm New Password</Label>
                   <Input id="confirm-password" type="password" />
                 </div>
-                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]" onClick={() => toast({ title: "Senha atualizada!", description: "Sua senha foi alterada com sucesso." })}>
                   Update Password
                 </Button>
 
@@ -217,13 +219,14 @@ export default function SettingsPage() {
                             </p>
                           </div>
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" onClick={() => toast({ title: "Chave copiada!", description: "A chave foi copiada para a área de transferência." })}>
                               Copy
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
                               className="text-red-500 hover:text-red-600"
+                              onClick={() => toast({ title: "Chave revogada!", description: "A chave foi revogada com sucesso." })}
                             >
                               Revoke
                             </Button>
@@ -237,13 +240,14 @@ export default function SettingsPage() {
                             </p>
                           </div>
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" onClick={() => toast({ title: "Chave copiada!", description: "A chave foi copiada para a área de transferência." })}>
                               Copy
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
                               className="text-red-500 hover:text-red-600"
+                              onClick={() => toast({ title: "Chave revogada!", description: "A chave foi revogada com sucesso." })}
                             >
                               Revoke
                             </Button>
@@ -253,7 +257,7 @@ export default function SettingsPage() {
                     </CardContent>
                   </Card>
                 </div>
-                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]" onClick={() => toast({ title: "Nova chave gerada!", description: "Uma nova chave de API foi criada." })}>
                   Generate New API Key
                 </Button>
               </CardContent>
@@ -304,7 +308,7 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
-                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+                <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]" onClick={() => toast({ title: "Preferências salvas!", description: "Suas preferências de notificação foram atualizadas." })}>
                   Save Preferences
                 </Button>
               </CardContent>

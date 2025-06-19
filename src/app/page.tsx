@@ -10,9 +10,7 @@ export default function LandingPage() {
       <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-black/50 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-[#9F5BFF] flex items-center justify-center">
-              <span className="text-white text-sm font-bold">D</span>
-            </div>
+            <img src="/logo.png" alt="DevVerse Logo" width={32} height={32} className="rounded-full" />
             <span className="text-xl font-bold">DevVerse</span>
           </div>
           <nav className="hidden space-x-8 md:flex">

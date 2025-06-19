@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code, Plus, Search, Star, StarOff, Tag } from "lucide-react";
 import { useState } from "react";
 import { useAppStore } from "@/lib/store";
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
 
 const LANGUAGES = [
   "All",
@@ -96,6 +98,67 @@ export default function SnippetsPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("All");
   const [snippets, setSnippets] = useState(SNIPPETS);
   const [selectedSnippet, setSelectedSnippet] = useState(SNIPPETS[0]);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [snippetDraft, setSnippetDraft] = useState<any>(null);
+
+  // Função para criar novo snippet
+  const handleCreateSnippet = () => {
+    if (!snippetDraft?.title || !snippetDraft?.code) {
+      toast({ title: "Preencha título e código." });
+      return;
+    }
+    const newSnippet = {
+      ...snippetDraft,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString().slice(0, 10),
+      isFavorite: false,
+    };
+    setSnippets([newSnippet, ...snippets]);
+    setShowCreateModal(false);
+    setSnippetDraft(null);
+    setSelectedSnippet(newSnippet);
+    toast({ title: "Snippet criado com sucesso!" });
+  };
+
+  // Função para editar snippet
+  const handleEditSnippet = () => {
+    if (!snippetDraft?.title || !snippetDraft?.code) {
+      toast({ title: "Preencha título e código." });
+      return;
+    }
+    setSnippets(snippets.map(s => s.id === snippetDraft.id ? { ...s, ...snippetDraft } : s));
+    setShowEditModal(false);
+    setSelectedSnippet({ ...selectedSnippet, ...snippetDraft });
+    setSnippetDraft(null);
+    toast({ title: "Snippet editado com sucesso!" });
+  };
+
+  // Função para remover snippet
+  const handleRemoveSnippet = (id: string) => {
+    setSnippets(snippets.filter(s => s.id !== id));
+    setSelectedSnippet(snippets[0] || null);
+    toast({ title: "Snippet removido." });
+  };
+
+  // Função para copiar código
+  const handleCopySnippet = async (code: string) => {
+    await navigator.clipboard.writeText(code);
+    toast({ title: "Código copiado!" });
+  };
+
+  // Função para abrir modal de edição
+  const openEditModal = () => {
+    setSnippetDraft(selectedSnippet);
+    setShowEditModal(true);
+  };
+
+  // Função para abrir modal de compartilhamento
+  const openShareModal = () => {
+    setShowShareModal(true);
+  };
+
 
   const filteredSnippets = snippets.filter((snippet) => {
     const matchesSearch =
@@ -135,11 +198,11 @@ export default function SnippetsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]">
+          <Button className="bg-[#9F5BFF] hover:bg-[#8A4AE0]" onClick={() => { setSnippetDraft({ title: '', description: '', language: 'JavaScript', code: '', tags: [] }); setShowCreateModal(true); toast({ title: 'Abrindo modal de novo snippet' }); }}>
             <Plus className="mr-2 h-4 w-4" />
             New Snippet
           </Button>
-          <Button variant="outline" onClick={() => useAppStore.getState().setAIModalOpen(true)}>
+          <Button variant="outline" onClick={() => { useAppStore.getState().setAIModalOpen(true); toast({ title: 'Abrindo assistente IA' }); }}>
             Gerar com IA
           </Button>
         </div>
@@ -183,7 +246,7 @@ export default function SnippetsPage() {
                     selectedLanguage === language ? "secondary" : "outline"
                   }
                   size="sm"
-                  onClick={() => setSelectedLanguage(language)}
+                  onClick={() => { setSelectedLanguage(language); toast({ title: `Filtro de linguagem: ${language}` }); } }
                 >
                   {language}
                 </Button>
@@ -199,7 +262,7 @@ export default function SnippetsPage() {
                   <Card
                     key={snippet.id}
                     className={`cursor-pointer transition-all hover:bg-accent ${selectedSnippet.id === snippet.id ? "border-[#9F5BFF]" : ""}`}
-                    onClick={() => setSelectedSnippet(snippet)}
+                    onClick={() => { setSelectedSnippet(snippet); toast({ title: `Snippet selecionado: ${snippet.title}` }); }}
                   >
                     <CardContent className="p-3">
                       <div className="flex items-start justify-between">
@@ -255,7 +318,7 @@ export default function SnippetsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => toggleFavorite(selectedSnippet.id)}
+                      onClick={() => { toggleFavorite(selectedSnippet.id); toast({ title: selectedSnippet.isFavorite ? 'Removido dos favoritos' : 'Adicionado aos favoritos' }); }}
                     >
                       {selectedSnippet.isFavorite ? (
                         <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
@@ -290,13 +353,70 @@ export default function SnippetsPage() {
                 </CardContent>
               </Card>
               <div className="flex justify-end gap-2">
-                <Button variant="outline">Edit</Button>
-                <Button variant="outline">Copy</Button>
-                <Button variant="outline">Share</Button>
+                <Button variant="outline" onClick={openEditModal}>Edit</Button>
+                <Button variant="outline" onClick={() => handleCopySnippet(selectedSnippet.code)}>Copy</Button>
+                <Button variant="outline" onClick={openShareModal}>Share</Button>
+                <Button variant="outline" className="text-red-500" onClick={() => handleRemoveSnippet(selectedSnippet.id)}>Delete</Button>
               </div>
             </>
           )}
-        </div>
+        {/* Modal Criar Snippet */}
+      <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Novo Snippet</DialogTitle>
+            <DialogDescription>Preencha os campos para criar um snippet.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Input placeholder="Título" value={snippetDraft?.title || ''} onChange={e => setSnippetDraft({ ...snippetDraft, title: e.target.value })} />
+            <Input placeholder="Descrição" value={snippetDraft?.description || ''} onChange={e => setSnippetDraft({ ...snippetDraft, description: e.target.value })} />
+            <Input placeholder="Linguagem" value={snippetDraft?.language || ''} onChange={e => setSnippetDraft({ ...snippetDraft, language: e.target.value })} />
+            <textarea className="w-full min-h-[80px] rounded border p-2" placeholder="Código" value={snippetDraft?.code || ''} onChange={e => setSnippetDraft({ ...snippetDraft, code: e.target.value })} />
+            <Input placeholder="Tags (separadas por vírgula)" value={snippetDraft?.tags?.join(',') || ''} onChange={e => setSnippetDraft({ ...snippetDraft, tags: e.target.value.split(',').map((t:string) => t.trim()) })} />
+          </div>
+          <DialogFooter>
+            <Button onClick={handleCreateSnippet}>Salvar</Button>
+            <Button variant="outline" onClick={() => setShowCreateModal(false)}>Cancelar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal Editar Snippet */}
+      <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar Snippet</DialogTitle>
+            <DialogDescription>Altere os campos desejados.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Input placeholder="Título" value={snippetDraft?.title || ''} onChange={e => setSnippetDraft({ ...snippetDraft, title: e.target.value })} />
+            <Input placeholder="Descrição" value={snippetDraft?.description || ''} onChange={e => setSnippetDraft({ ...snippetDraft, description: e.target.value })} />
+            <Input placeholder="Linguagem" value={snippetDraft?.language || ''} onChange={e => setSnippetDraft({ ...snippetDraft, language: e.target.value })} />
+            <textarea className="w-full min-h-[80px] rounded border p-2" placeholder="Código" value={snippetDraft?.code || ''} onChange={e => setSnippetDraft({ ...snippetDraft, code: e.target.value })} />
+            <Input placeholder="Tags (separadas por vírgula)" value={snippetDraft?.tags?.join(',') || ''} onChange={e => setSnippetDraft({ ...snippetDraft, tags: e.target.value.split(',').map((t:string) => t.trim()) })} />
+          </div>
+          <DialogFooter>
+            <Button onClick={handleEditSnippet}>Salvar</Button>
+            <Button variant="outline" onClick={() => setShowEditModal(false)}>Cancelar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal Compartilhar Snippet */}
+      <Dialog open={showShareModal} onOpenChange={setShowShareModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Compartilhar Snippet</DialogTitle>
+            <DialogDescription>Compartilhe este link:</DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center gap-2">
+            <Input readOnly value={`https://devverse.app/snippet/${selectedSnippet?.id}`} />
+            <Button onClick={() => {navigator.clipboard.writeText(`https://devverse.app/snippet/${selectedSnippet?.id}`); toast({ title: "Link copiado!" });}}>Copiar Link</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+    </div>
       </div>
     </div>
   );

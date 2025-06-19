@@ -23,9 +23,7 @@ export default function Navbar() {
             href="/dashboard"
             className="flex items-center gap-2 font-semibold"
           >
-            <div className="h-6 w-6 rounded-full bg-[#9F5BFF] flex items-center justify-center">
-              <span className="text-white text-xs font-bold">D</span>
-            </div>
+            <img src="/logo.png" alt="DevVerse Logo" width={32} height={32} className="rounded-full" />
             <span className="hidden md:inline-flex">DevVerse</span>
           </Link>
         </div>
